@@ -119,6 +119,14 @@ module GraphQL
         self
       end
 
+      def total_count
+        nodes.count
+      end
+
+      def total_pages
+        ((nodes.count / per_page.to_f).ceil) - 1
+      end
+
       # Used by `pageInfo`
       def has_next_page
         !!(first && sliced_nodes.count > first)

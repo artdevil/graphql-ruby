@@ -7,6 +7,14 @@ module GraphQL
         encode(idx.to_s)
       end
 
+      def total_count
+        nodes.count
+      end
+
+      def total_pages
+        ((nodes.count / per_page.to_f).ceil) - 1
+      end
+
       def has_next_page
         if first
           # There are more items after these items
