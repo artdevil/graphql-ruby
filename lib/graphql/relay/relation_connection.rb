@@ -61,11 +61,18 @@ module GraphQL
         @last
       end
 
-      def set_offset
-        return @set_offset if defined? @set_offset
+      def per_page
+        return @per_page if defined? @per_page
 
-        @set_offset = get_limited_arg(:set_offset)
-        @set_offset
+        @per_page = get_limited_arg(:per_page)
+        @per_page
+      end
+
+      def page_number
+        return @page_number if defined? @page_number
+
+        @page_number = get_limited_arg(:page_number)
+        @page_number
       end
 
       private
@@ -77,14 +84,14 @@ module GraphQL
 
         items = sliced_nodes
 
+        if per_page
+          items = items.offset(per_page)
+        end
+
         if first
           if relation_limit(items).nil? || relation_limit(items) > first
             items = items.limit(first)
           end
-        end
-
-        if set_offset
-          items = items.offset(set_offset)
         end
 
         if last

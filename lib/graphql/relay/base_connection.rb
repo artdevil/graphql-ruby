@@ -90,10 +90,16 @@ module GraphQL
         @last ||= get_limited_arg(:last)
       end
 
-      # The value passed as `set_offset:`, if there was one. Negative numbers become `0`.
+      # The value passed as `per_page:`, if there was one. Negative numbers become `0`.
       # @return [Integer, nil]
-      def set_offset
-        @set_offset ||= get_limited_arg(:set_offset)
+      def per_page
+        @per_page ||= get_limited_arg(:per_page)
+      end
+
+      # The value passed as `page_number:`, if there was one. Negative numbers become `0`.
+      # @return [Integer, nil]
+      def page_number
+        @page_number ||= get_limited_arg(:page_number)
       end
 
       # The value passed as `before:`, if there was one
