@@ -24,11 +24,11 @@ module GraphQL
       end
 
       def total_count
-        paged_nodes.count
+        sliced_nodes_count
       end
 
       def total_pages
-        ((paged_nodes.count / per_page.to_f).ceil) - 1
+        ((sliced_nodes_count / per_page.to_f).ceil) - 1
       end
 
       def has_next_page

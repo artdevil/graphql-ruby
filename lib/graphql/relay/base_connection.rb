@@ -120,11 +120,11 @@ module GraphQL
       end
 
       def total_count
-        paged_nodes.count
+        sliced_nodes.count
       end
 
       def total_pages
-        ((paged_nodes.count / per_page.to_f).ceil) - 1
+        ((sliced_nodes.count / per_page.to_f).ceil) - 1
       end
 
       # Used by `pageInfo`
