@@ -84,32 +84,32 @@ module GraphQL
 
         items = sliced_nodes
 
-        if per_page
-          items = items.offset(per_page)
-        end
-
-        if first
-          if relation_limit(items).nil? || relation_limit(items) > first
-            items = items.limit(first)
+        if per_page && page_number
+          items = items.page(page_number).per(per_page)
+        else
+          if first
+            if relation_limit(items).nil? || relation_limit(items) > first
+              items = items.limit(first)
+            end
           end
-        end
 
-        if last
-          if relation_limit(items)
-            if last <= relation_limit(items)
-              offset = (relation_offset(items) || 0) + (relation_limit(items) - last)
+          if last
+            if relation_limit(items)
+              if last <= relation_limit(items)
+                offset = (relation_offset(items) || 0) + (relation_limit(items) - last)
+                items = items.offset(offset).limit(last)
+              end
+            else
+              slice_count = relation_count(items)
+              offset = (relation_offset(items) || 0) + slice_count - [last, slice_count].min
               items = items.offset(offset).limit(last)
             end
-          else
-            slice_count = relation_count(items)
-            offset = (relation_offset(items) || 0) + slice_count - [last, slice_count].min
-            items = items.offset(offset).limit(last)
           end
-        end
 
-        if max_page_size && !first && !last
-          if relation_limit(items).nil? || relation_limit(items) > max_page_size
-            items = items.limit(max_page_size)
+          if max_page_size && !first && !last
+            if relation_limit(items).nil? || relation_limit(items) > max_page_size
+              items = items.limit(max_page_size)
+            end
           end
         end
 
