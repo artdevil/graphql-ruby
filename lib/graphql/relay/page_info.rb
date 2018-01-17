@@ -6,7 +6,7 @@ module GraphQL
       name("PageInfo")
       description("Information about pagination in a connection.")
       field :totalCount, !types.Int, "total count item", property: :total_count
-      field :totalPages, !types.Int, "total pages item", property: :has_previous_page
+      field :totalPages, !types.Int, "total pages item", property: :total_pages
       field :hasNextPage, !types.Boolean, "When paginating forwards, are there more items?", property: :has_next_page
       field :hasPreviousPage, !types.Boolean, "When paginating backwards, are there more items?", property: :has_previous_page
       field :startCursor, types.String, "When paginating backwards, the cursor to continue.", property: :start_cursor
