@@ -69,9 +69,10 @@ module GraphQL
       end
 
       def page_number
-        # return @page_number if defined? @page_number
-        @page_number ||= 0
-        # @page_number
+        return @page_number if defined? @page_number
+
+        @page_number = get_limited_arg(:page_number)
+        @page_number
       end
 
       private
@@ -84,7 +85,6 @@ module GraphQL
         items = sliced_nodes
 
         if per_page && page_number
-          Rails.logger.info("-------------- per_page  page_number --------------")
           items = items.offset(page_number * per_page).limit(per_page)
         else
           if first
