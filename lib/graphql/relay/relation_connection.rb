@@ -85,7 +85,8 @@ module GraphQL
         items = sliced_nodes
 
         if per_page && page_number
-          items = items.page(page_number).per(per_page)
+          Rails.logger.info("-------------- per_page  page_number --------------")
+          items = items.offset(page_number).limit(per_page)
         else
           if first
             if relation_limit(items).nil? || relation_limit(items) > first
