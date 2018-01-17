@@ -69,10 +69,9 @@ module GraphQL
       end
 
       def page_number
-        return @page_number if defined? @page_number
-
-        @page_number = get_limited_arg(:page_number)
-        @page_number
+        # return @page_number if defined? @page_number
+        @page_number ||= 0
+        # @page_number
       end
 
       private
@@ -86,7 +85,7 @@ module GraphQL
 
         if per_page && page_number
           Rails.logger.info("-------------- per_page  page_number --------------")
-          items = items.offset(page_number).limit(per_page)
+          items = items.offset(page_number * per_page).limit(per_page)
         else
           if first
             if relation_limit(items).nil? || relation_limit(items) > first
