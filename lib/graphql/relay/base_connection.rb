@@ -90,6 +90,12 @@ module GraphQL
         @last ||= get_limited_arg(:last)
       end
 
+      # The value passed as `set_offset:`, if there was one. Negative numbers become `0`.
+      # @return [Integer, nil]
+      def set_offset
+        @set_offset ||= get_limited_arg(:set_offset)
+      end
+
       # The value passed as `before:`, if there was one
       # @return [String, nil]
       def before

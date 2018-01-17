@@ -49,12 +49,19 @@ module GraphQL
         @last
       end
 
+      def set_offset
+        return @set_offset if defined? @set_offset
+
+        @set_offset = get_limited_arg(:set_offset)
+      end
+
       # apply first / last limit results
       def paged_nodes
         @paged_nodes ||= begin
           items = sliced_nodes
 
           items = items.first(first) if first
+          items = items.set_offset(set_offset) if set_offset
           items = items.last(last) if last
           items = items.first(max_page_size) if max_page_size && !first && !last
 
